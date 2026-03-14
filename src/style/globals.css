@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --background: #f4f0e0;
+  --foreground: #171717;
+  --accent: oklch(62.3% 0.214 259.815);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --mask-size: 0px;
+}
+
+@layer base{
+  ::selection {
+    background: var(--accent);
+    color: var(--background);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+}
+.mouse-mask {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+  background: var(--color-accent);
+
+  mix-blend-mode: difference;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  transition:
+    width 0.35s cubic-bezier(.22,1,.36,1),
+    height 0.35s cubic-bezier(.22,1,.36,1);
+}
+
+.mouse-mask.expanded {
+  width: 140px;
+  height: 140px;
+}
+
+.mask-text {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: white;
+  mix-blend-mode: normal;
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-layer.normal {
+  z-index: 1;
+}
+
+.hero-layer.reveal {
+  z-index: 2;
+
+  /* Circle mask */
+  -webkit-mask-image: radial-gradient(
+    circle var(--mask-size) at var(--mouse-x) var(--mouse-y),
+    black 100%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--mask-size) at var(--mouse-x) var(--mouse-y),
+    black 100%,
+    transparent 100%
+  );
+
+  transition: -webkit-mask-size 0.3s ease;
+}
+
+#hero:hover {
+  --mask-size: 150px;
+}
+
+#hero {
+  --mask-size: 0px;
+}
+
+@keyframes blast {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(-50% + var(--x)),
+      calc(-50% + var(--y))
+    ) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-blast {
+  animation: blast 0.7s cubic-bezier(.17,.67,.83,.67) forwards;
+  box-shadow: 0 0 14px rgba(255, 200, 0, 0.9);
+}
