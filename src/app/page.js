@@ -8,7 +8,7 @@ export default function Home(){
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Hero />
       <About />
-      {/* {<Projects />} */}
+      <Projects />
       <Contact />
     </div>
   )

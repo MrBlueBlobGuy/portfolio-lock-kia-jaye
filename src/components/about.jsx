@@ -114,7 +114,7 @@ export default function About() {
                     </span>
 
                 </p>
-            <a href="/hero-bg2.png" target="_blank">
+            <a href="/resume.pdf" target="_blank">
                 <button className="border-accent border-2 rounded w-full m-4 py-1 hover:bg-accent transition-colors hover:text-background">
                     <span className="md:hidden">Resume</span>
                     <span className="hidden md:inline">Download Resume</span>
